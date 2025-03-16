@@ -1,0 +1,121 @@
+<div class="container mx-auto px-4 py-8 max-w-4xl">
+  <div class="mb-8">
+    <div class="flex justify-between items-start">
+      <div>
+        <div class="flex items-center space-x-4">
+          <%= button_to toggle_task_path(@task), method: :patch, class: "flex-shrink-0" do %>
+            <div class="w-8 h-8 border-2 rounded <%= @task.completed ? 'bg-green-500 border-green-500' : 'border-gray-400' %>">
+              <% if @task.completed %>
+                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              <% end %>
+            </div>
+          <% end %>
+          <h1 class="text-3xl font-bold text-gray-900 <%= @task.completed ? 'line-through' : '' %>">
+            <%= @task.title %>
+          </h1>
+        </div>
+        <% if @task.project %>
+          <p class="mt-2 text-gray-600">
+            Project: <%= link_to @task.project.title, project_path(@task.project), class: "text-blue-600 hover:text-blue-800" %>
+          </p>
+        <% end %>
+      </div>
+      <div class="flex space-x-3">
+        <%= link_to 'Edit Task', edit_task_path(@task), 
+            class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' %>
+      </div>
+    </div>
+
+    <div class="mt-6 space-y-4">
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">Details</h2>
+        <div class="space-y-4">
+          <div>
+            <h3 class="text-sm font-medium text-gray-500">Description</h3>
+            <p class="mt-1 text-gray-900"><%= @task.description %></p>
+          </div>
+
+          <div class="flex flex-wrap gap-2">
+            <% @task.tags.each do |tag| %>
+              <span class="px-2 py-1 text-sm rounded-full bg-gray-100 text-gray-800">
+                <%= tag.name %>
+              </span>
+            <% end %>
+          </div>
+
+          <div class="flex space-x-6">
+            <div>
+              <h3 class="text-sm font-medium text-gray-500">Priority</h3>
+              <span class="mt-1 inline-block px-2 py-1 text-sm rounded-full
+                <%= case @task.priority
+                    when 'high' then 'bg-red-100 text-red-800'
+                    when 'medium' then 'bg-yellow-100 text-yellow-800'
+                    else 'bg-green-100 text-green-800'
+                    end %>">
+                <%= @task.priority&.capitalize %>
+              </span>
+            </div>
+
+            <% if @task.due_date %>
+              <div>
+                <h3 class="text-sm font-medium text-gray-500">Due Date</h3>
+                <p class="mt-1 text-gray-900">
+                  <%= @task.due_date.strftime("%B %d, %Y") %>
+                </p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">Comments</h2>
+        
+        <%= form_with(model: [@task, @comment], class: "mb-6") do |f| %>
+          <div>
+            <%= f.text_area :content, 
+                rows: 3, 
+                placeholder: "Add a comment...",
+                class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" %>
+          </div>
+
+          <div class="mt-3 flex justify-end">
+            <%= f.submit "Post Comment", 
+                class: "px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+          </div>
+        <% end %>
+
+        <div class="space-y-4">
+          <% @comments.each do |comment| %>
+            <div class="flex space-x-3 p-4 bg-gray-50 rounded-lg">
+              <div class="flex-1">
+                <div class="flex items-center justify-between">
+                  <h3 class="text-sm font-medium text-gray-900">
+                    <%= comment.user.name %>
+                  </h3>
+                  <p class="text-sm text-gray-500">
+                    <%= time_ago_in_words(comment.created_at) %> ago
+                  </p>
+                </div>
+                <p class="mt-2 text-sm text-gray-700">
+                  <%= comment.content %>
+                </p>
+              </div>
+              
+              <%= button_to comment_path(comment), 
+                  method: :delete,
+                  class: "text-gray-400 hover:text-red-500",
+                  data: { confirm: "Are you sure?" } do %>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                </svg>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

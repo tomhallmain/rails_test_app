@@ -1,4 +1,4 @@
-<%= form_with(model: task, class: "space-y-6") do |f| %>
+<%= form_with(model: [@project, task], class: "space-y-6") do |f| %>
   <% if task.errors.any? %>
     <div class="bg-red-50 p-4 rounded-lg">
       <div class="text-red-700 font-medium">
@@ -23,6 +23,13 @@
   </div>
 
   <div>
+    <%= f.label :project_id, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.collection_select :project_id, @projects, :id, :title,
+        { prompt: 'Select a project' },
+        class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" %>
+  </div>
+
+  <div>
     <%= f.label :priority, class: "block text-sm font-medium text-gray-700" %>
     <%= f.select :priority, 
         options_for_select([['Low', 'low'], ['Medium', 'medium'], ['High', 'high']], task.priority),
@@ -35,13 +42,26 @@
     <%= f.date_field :due_date, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" %>
   </div>
 
+  <div>
+    <%= f.label :tag_ids, 'Tags', class: "block text-sm font-medium text-gray-700" %>
+    <div class="mt-2 space-y-2">
+      <%= f.collection_check_boxes :tag_ids, @tags, :id, :name do |b| %>
+        <div class="flex items-center">
+          <%= b.check_box class: "h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" %>
+          <%= b.label class: "ml-2 block text-sm text-gray-900" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
   <div class="flex items-center">
     <%= f.check_box :completed, class: "h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" %>
     <%= f.label :completed, class: "ml-2 block text-sm text-gray-900" %>
   </div>
 
   <div class="flex justify-end space-x-3">
-    <%= link_to 'Cancel', tasks_path, class: "px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50" %>
+    <%= link_to 'Cancel', task.project ? project_path(task.project) : tasks_path, 
+        class: "px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50" %>
     <%= f.submit class: "px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
   </div>
 <% end %> 

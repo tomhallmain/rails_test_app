@@ -16,6 +16,10 @@ gem "turbo-rails"
 gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
+# Use Tailwind CSS [https://github.com/rails/tailwindcss-rails]
+gem "tailwindcss-rails"
+# Use Devise for authentication [https://github.com/heartcombo/devise]
+gem "devise"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
@@ -39,6 +43,20 @@ gem "thruster", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
+
+# Data integrity and auditing gems
+gem "strong_migrations"
+gem "database_consistency"
+gem "scenic"
+gem "paper_trail"
+
+# Pagination
+gem 'kaminari'
+
+# Admin interface
+gem 'rails_admin', '~> 3.3.0'
+gem "sassc-rails" # For Windows compatibility
+gem "jsbundling-rails"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
