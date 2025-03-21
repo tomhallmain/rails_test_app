@@ -1,24 +1,6 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Small web application to test out Ruby on Rails with Postgres. See README.local.md for notes and more info.
 
-Things you may want to cover:
+* Built using Ruby version 3.3.7, Postgres 15
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
