@@ -19,6 +19,8 @@ rails assets:precompile RAILS_ENV=development
 
 ## Database Management
 
+Ensure postgres service is started and running
+
 ```bash
 # Create database
 rails db:create
