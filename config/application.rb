@@ -8,6 +8,12 @@ Bundler.require(*Rails.groups)
 
 module Myapp
   class Application < Rails::Application
+    # Load the PostgreSQL checker before Rails initializes
+    config.before_initialize do
+      require_relative '../lib/postgres_connection_checker'
+      PostgresConnectionChecker.check!
+    end
+    
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
 
