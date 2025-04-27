@@ -1,0 +1,18 @@
+<%# Custom pagination with better spacing %>
+<div class="flex justify-center items-center space-x-2">
+  <%= paginator.render do %>
+    <%= first_page_tag unless current_page.first? %>
+    <%= prev_page_tag unless current_page.first? %>
+    
+    <% each_page do |page| %>
+      <% if page.current? %>
+        <span class="px-3 py-1 border rounded bg-blue-500 text-white"><%= page %></span>
+      <% else %>
+        <%= page_tag page %>
+      <% end %>
+    <% end %>
+    
+    <%= next_page_tag unless current_page.last? %>
+    <%= last_page_tag unless current_page.last? %>
+  <% end %>
+</div> 

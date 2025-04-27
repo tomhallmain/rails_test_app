@@ -21,7 +21,6 @@ class Task < ApplicationRecord
   
   before_create :set_defaults
   before_destroy :ensure_no_active_dependencies
-  after_save :update_project_status
   
   scope :active, -> { where(completed: false, archived: false) }
   scope :completed, -> { where(completed: true) }
@@ -42,10 +41,6 @@ class Task < ApplicationRecord
         task.update!(completed: status)
       end
       
-      # Update related projects
-      Project.where(id: tasks.select(:project_id).distinct)
-             .find_each(&:update_completion_status)
-             
       # Log the bulk operation
       Rails.logger.info "Bulk status update performed by #{current_user.id} on tasks: #{ids}"
     end
@@ -115,10 +110,6 @@ class Task < ApplicationRecord
     end
   end
   
-  def update_project_status
-    project.update_completion_status
-  end
-  
   def archived_at_presence_if_archived
     if archived? && archived_at.blank?
       errors.add(:archived_at, "must be present when task is archived")
@@ -131,10 +122,10 @@ class Task < ApplicationRecord
   end
   
   def ip_for_paper_trail
-    PaperTrail.request.ip
+    PaperTrail.request.controller_info[:ip]
   end
   
   def user_agent_for_paper_trail
-    PaperTrail.request.user_agent
+    PaperTrail.request.controller_info[:user_agent]
   end
 end

@@ -2,8 +2,8 @@
   <div class="mb-8">
     <div class="flex justify-between items-start">
       <div>
-        <h1 class="text-3xl font-bold text-gray-900"><%= @project.title %></h1>
-        <p class="mt-2 text-gray-600"><%= @project.description %></p>
+        <h1 class="text-2xl font-bold text-gray-900"><%= @project.title %></h1>
+        <p class="mt-1 text-gray-600 text-sm whitespace-pre-line"><%= @project.description %></p>
       </div>
       <div class="flex space-x-4">
         <%= link_to 'Edit Project', edit_project_path(@project), 
@@ -39,10 +39,10 @@
           <% end %>
           
           <div class="flex-grow">
-            <h3 class="text-lg font-semibold <%= task.completed ? 'line-through text-gray-500' : 'text-gray-900' %>">
+            <h3 class="text-sm font-semibold <%= task.completed ? 'line-through text-gray-500' : 'text-gray-900' %>">
               <%= link_to task.title, task_path(task), class: "hover:text-blue-600" %>
             </h3>
-            <p class="text-sm text-gray-600"><%= task.description %></p>
+            <p class="text-xs text-gray-600 whitespace-pre-line"><%= task.description %></p>
             <div class="flex flex-wrap gap-2 mt-2">
               <% task.tags.each do |tag| %>
                 <span class="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800">
@@ -81,5 +81,9 @@
         </div>
       </div>
     <% end %>
+  </div>
+  
+  <div class="mt-8">
+    <%= paginate @tasks, window: 2, outer_window: 1, views_prefix: 'shared' %>
   </div>
 </div> 

@@ -94,7 +94,7 @@ module PostgresConnectionChecker
                 version.nil? ? 9999 : (version - 17).abs
             end
         end
-        puts "Selected service: #{service_name}".blue
+        puts "Selected service: #{service_name}"
         return service_name
     end
 
@@ -113,7 +113,7 @@ module PostgresConnectionChecker
 
     private
     def self.start_postgres_service_windows(db_config, service_name = nil)
-        puts "Detected Windows system".yellow
+        puts "Detected Windows system"
 
         begin
             unless service_name
@@ -159,7 +159,7 @@ module PostgresConnectionChecker
 
     private
     def self.start_postgres_service_linux(db_config, service_name = nil)
-        puts "Detected Linux system".yellow
+        puts "Detected Linux system"
 
         begin
             unless service_name
@@ -170,7 +170,7 @@ module PostgresConnectionChecker
                             .select { |name| name.include?('postgresql') }
 
                 if services.empty?
-                    puts "No PostgreSQL services found via systemctl. Checking init.d...".yellow
+                    puts "No PostgreSQL services found via systemctl. Checking init.d..."
                     services = Dir.glob('/etc/init.d/postgresql*')
                                 .map { |path| File.basename(path) }
                 end
@@ -211,7 +211,7 @@ module PostgresConnectionChecker
 
     private
     def self.start_postgres_service_macos(db_config, service_name = nil)
-        puts "Detected macOS system".yellow
+        puts "Detected macOS system"
 
         begin
             unless service_name

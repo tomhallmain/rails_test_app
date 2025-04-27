@@ -3,10 +3,14 @@ class ProjectsController < ApplicationController
 
   def index
     @projects = current_user.projects.includes(:tasks)
+                          .order(updated_at: :desc)
+                          .page(params[:page]).per(12)
   end
 
   def show
     @tasks = @project.tasks.includes(:tags, :user)
+                    .order(created_at: :desc)
+                    .page(params[:page]).per(15)
   end
 
   def new

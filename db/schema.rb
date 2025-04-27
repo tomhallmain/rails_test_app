@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_16_002000) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_27_125036) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -97,7 +97,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_16_002000) do
     t.datetime "created_at"
     t.string "ip"
     t.string "user_agent"
+    t.integer "user_id"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
+    t.index ["user_id"], name: "index_versions_on_user_id"
   end
 
   add_foreign_key "comments", "tasks"

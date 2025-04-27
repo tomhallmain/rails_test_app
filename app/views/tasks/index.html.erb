@@ -1,17 +1,17 @@
 <div class="container mx-auto px-4 py-8">
   <div class="flex justify-between items-center mb-6">
-    <h1 class="text-3xl font-bold text-gray-900">Tasks</h1>
+    <h1 class="text-2xl font-bold text-gray-900">Tasks</h1>
     <%= link_to 'New Task', new_task_path, class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' %>
   </div>
 
   <div class="bg-white shadow-lg rounded-lg">
     <% @tasks.each do |task| %>
-      <div class="border-b border-gray-200 p-4 flex items-center justify-between hover:bg-gray-50">
-        <div class="flex items-center space-x-4">
+      <div class="border-b border-gray-200 p-3 flex items-center justify-between hover:bg-gray-50">
+        <div class="flex items-center space-x-3">
           <%= button_to toggle_task_path(task), method: :patch, class: "flex-shrink-0" do %>
-            <div class="w-6 h-6 border-2 rounded <%= task.completed ? 'bg-green-500 border-green-500' : 'border-gray-400' %>">
+            <div class="w-5 h-5 border-2 rounded <%= task.completed ? 'bg-green-500 border-green-500' : 'border-gray-400' %>">
               <% if task.completed %>
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                 </svg>
               <% end %>
@@ -19,17 +19,17 @@
           <% end %>
           
           <div class="flex-grow">
-            <h3 class="text-lg font-semibold <%= task.completed ? 'line-through text-gray-500' : 'text-gray-900' %>">
+            <h3 class="text-sm font-semibold <%= task.completed ? 'line-through text-gray-500' : 'text-gray-900' %>">
               <%= task.title %>
             </h3>
-            <p class="text-sm text-gray-600"><%= task.description %></p>
-            <div class="flex space-x-4 mt-2">
+            <p class="text-xs text-gray-600 whitespace-pre-line"><%= task.description %></p>
+            <div class="flex space-x-3 mt-1">
               <% if task.due_date %>
-                <span class="text-sm text-gray-500">
+                <span class="text-xs text-gray-500">
                   Due: <%= task.due_date.strftime("%b %d, %Y") %>
                 </span>
               <% end %>
-              <span class="text-sm px-2 py-1 rounded-full
+              <span class="text-xs px-2 py-1 rounded-full
                 <%= case task.priority
                     when 'high' then 'bg-red-100 text-red-800'
                     when 'medium' then 'bg-yellow-100 text-yellow-800'
@@ -64,5 +64,9 @@
         </div>
       </div>
     <% end %>
+  </div>
+  
+  <div class="mt-8">
+    <%= paginate @tasks, window: 2, outer_window: 1, views_prefix: 'shared' %>
   </div>
 </div> 
