@@ -31,6 +31,7 @@ class Task < ApplicationRecord
     joins(:comments).where(comments: { status: 'open' }).distinct 
   }
   scope :completed_before, ->(date) { completed.where('completed_at < ?', date) }
+  scope :not_completed, -> { where(completed: false) }
   
   # Class methods for bulk operations
   def self.bulk_update_status(ids, status, current_user)

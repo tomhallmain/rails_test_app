@@ -4,6 +4,12 @@ class Project < ApplicationRecord
 
   validates :title, presence: true
   
+  scope :not_completed, -> { 
+    joins(:tasks)
+      .where(tasks: { completed: false })
+      .distinct
+  }
+  
   def completion_percentage
     return 0 if tasks.empty?
     ((tasks.where(completed: true).count.to_f / tasks.count) * 100).round

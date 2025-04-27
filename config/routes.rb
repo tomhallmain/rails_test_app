@@ -28,6 +28,12 @@ Rails.application.routes.draw do
 
   resources :projects do
     resources :tasks, shallow: true
+    member do
+      get 'report'
+    end
+    collection do
+      get 'all_reports'
+    end
   end
 
   resources :tasks do

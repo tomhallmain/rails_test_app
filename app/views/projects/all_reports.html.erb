@@ -1,0 +1,41 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="mb-8">
+    <div class="flex justify-between items-start">
+      <h1 class="text-2xl font-bold text-gray-900">All Projects Report</h1>
+      <%= link_to 'Back to Projects', projects_path, class: 'text-blue-600 hover:text-blue-800' %>
+    </div>
+  </div>
+
+  <div class="bg-white shadow-lg rounded-lg p-6">
+    <% if @projects.any? %>
+      <% @projects.each do |project| %>
+        <div class="mb-8">
+          <div class="text-lg font-semibold text-gray-900 mb-4">
+            <%= project.title %>
+          </div>
+          
+          <% if project.tasks.not_completed.any? %>
+            <div class="ml-4">
+              <% project.tasks.not_completed.each do |task| %>
+                <div class="mb-4">
+                  <div class="text-md font-medium text-gray-800">
+                    <%= link_to task.title, edit_task_path(task), class: "text-blue-600 hover:text-blue-800 hover:underline" %>
+                  </div>
+                  <% if task.description.present? %>
+                    <div class="ml-4 mt-1 text-sm text-gray-600 whitespace-pre-line">
+                      <%= task.description %>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="ml-4 text-gray-500 italic">No open tasks for this project.</div>
+          <% end %>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="text-gray-500 italic">No open projects found.</div>
+    <% end %>
+  </div>
+</div> 

@@ -1,10 +1,22 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :report]
 
   def index
     @projects = current_user.projects.includes(:tasks)
                           .order(updated_at: :desc)
                           .page(params[:page]).per(12)
+  end
+
+  def report
+    @tasks = @project.tasks.not_completed
+                    .includes(:tags)
+                    .order(created_at: :desc)
+  end
+
+  def all_reports
+    @projects = current_user.projects.not_completed
+                          .includes(tasks: :tags)
+                          .order(updated_at: :desc)
   end
 
   def show
