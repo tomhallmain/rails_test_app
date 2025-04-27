@@ -27,6 +27,13 @@
           
           <p class="mt-1 text-gray-600 text-xs whitespace-pre-line"><%= project.description %></p>
           
+          <div class="mt-2 text-xs text-gray-500">
+            Created: <%= project.created_at.strftime("%b %d, %Y") %>
+            <% if project.updated_at != project.created_at %>
+              <br>Updated: <%= project.updated_at.strftime("%b %d, %Y") %>
+            <% end %>
+          </div>
+
           <div class="mt-2">
             <div class="w-full bg-gray-200 rounded-full h-1.5">
               <div class="bg-blue-600 h-1.5 rounded-full" style="width: <%= project.completion_percentage %>%"></div>

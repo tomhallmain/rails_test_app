@@ -4,6 +4,12 @@
       <div>
         <h1 class="text-2xl font-bold text-gray-900"><%= @project.title %></h1>
         <p class="mt-1 text-gray-600 text-sm whitespace-pre-line"><%= @project.description %></p>
+        <div class="mt-2 text-xs text-gray-500">
+          Created: <%= @project.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+          <% if @project.updated_at != @project.created_at %>
+            <br>Last Updated: <%= @project.updated_at.strftime("%B %d, %Y at %I:%M %p") %>
+          <% end %>
+        </div>
       </div>
       <div class="flex space-x-4">
         <%= link_to 'Edit Project', edit_project_path(@project), 
@@ -64,6 +70,12 @@
                     end %>">
                 <%= task.priority&.capitalize %>
               </span>
+              <div class="text-xs text-gray-500">
+                Created: <%= task.created_at.strftime("%b %d, %Y") %>
+                <% if task.updated_at != task.created_at %>
+                  <br>Updated: <%= task.updated_at.strftime("%b %d, %Y") %>
+                <% end %>
+              </div>
             </div>
           </div>
         </div>
