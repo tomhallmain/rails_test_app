@@ -14,6 +14,10 @@ class TasksController < ApplicationController
   end
 
   def new
+    if params[:project_id].blank?
+      redirect_to projects_path, notice: 'Please select a project to create a task.'
+      return
+    end
     @task = current_user.tasks.build(project_id: params[:project_id])
   end
 

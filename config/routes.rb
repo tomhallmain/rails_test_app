@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Configure Devise routes
-  devise_for :users
+  devise_for :users, controllers: {
+    sessions: 'users/sessions' # Path to your custom sessions controller
+  }, defaults: { format: :json } # Allow JSON requests
 
   # Mount RailsAdmin
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'

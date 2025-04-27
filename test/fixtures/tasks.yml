@@ -1,15 +1,25 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  description: MyText
+  title: "Test Task"
+  description: "This is a test task"
+  due_date: <%= 1.week.from_now %>
+  priority: medium
   completed: false
-  due_date: 2025-03-15 18:36:39
-  priority: MyString
+  archived: false
+  project: one
+  user: one
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
 
 two:
-  title: MyString
-  description: MyText
+  title: "Another Test Task"
+  description: "This is another test task"
+  due_date: <%= 2.weeks.from_now %>
+  priority: high
   completed: false
-  due_date: 2025-03-15 18:36:39
-  priority: MyString
+  archived: false
+  project: one
+  user: one
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

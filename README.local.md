@@ -41,6 +41,17 @@ rails db:migrate:status
 rails db:seed
 ```
 
+### Test-Specific Database Management:
+
+```bash
+# This will run all pending migrations only on the test database
+rails db:migrate RAILS_ENV=test
+
+# Drop the test database, create a fresh test database, run all migrations on it
+rails db:test:prepare
+```
+
+
 ## Rails Console Commands
 
 ```bash

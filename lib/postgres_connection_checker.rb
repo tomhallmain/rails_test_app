@@ -15,6 +15,19 @@ module PostgresConnectionChecker
         abort "Critical error during PostgreSQL check: #{e.message}"
     end
 
+    private
+    def self.service_running?
+        if RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/
+            services_output = `sc query postgresql-x64-17`
+            services_output.include?('RUNNING')
+        elsif RbConfig::CONFIG['host_os'] =~ /linux/
+            system('systemctl is-active --quiet postgresql')
+        elsif RbConfig::CONFIG['host_os'] =~ /darwin/
+            system('brew services list | grep postgresql | grep -q started')
+        else
+            false
+        end
+    end
 
     private
     def self.start_postgres_service(db_config)
@@ -54,12 +67,20 @@ module PostgresConnectionChecker
                 puts "Successfully connected to PostgreSQL"
                 return true
             rescue PG::ConnectionBad => e
+                if e.message.downcase.include?('fe_sendauth') || e.message.downcase.include?('no password supplied')
+                    raise "Authentication error: #{e.message}\nPlease check your database.yml configuration for username and password settings"
+                end
+
                 unless do_retry
                     puts "PostgreSQL connection failed: #{e.message}."
                     return false
                 end
+                
                 attempt += 1
                 if attempt >= max_attempts
+                    if service_running?
+                        raise "PostgreSQL service is running but connection failed: #{e.message}\nPlease check your database configuration and credentials"
+                    end
                     puts "Failed to connect to PostgreSQL after #{max_attempts} attempts"
                     return false
                 end

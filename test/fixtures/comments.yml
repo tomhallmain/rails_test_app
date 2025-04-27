@@ -1,11 +1,22 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  content: MyText
+  content: "This is a test comment on a task"
   user: one
   task: one
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
 
 two:
-  content: MyText
+  content: "Another task comment"
   user: two
+  task: one
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+three:
+  content: "Comment on different task"
+  user: one
   task: two
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

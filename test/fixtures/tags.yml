@@ -1,7 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  name: "Important"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
 
 two:
-  name: MyString
+  name: "Urgent"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
