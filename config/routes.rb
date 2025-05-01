@@ -47,4 +47,8 @@ Rails.application.routes.draw do
   end
 
   resources :tags, except: [:show]
+
+  # User profile
+  get 'profile', to: 'users#profile', as: :profile
+  patch 'profile', to: 'users#update'
 end

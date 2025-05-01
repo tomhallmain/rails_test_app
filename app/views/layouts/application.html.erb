@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Myapp" %></title>
+    <title><%= content_for(:title) || "Mustermeister" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -29,7 +29,7 @@
         <div class="flex justify-between h-16">
           <div class="flex">
             <div class="flex-shrink-0 flex items-center">
-              <%= link_to 'Task Manager', root_path, class: 'text-xl font-bold text-gray-800' %>
+              <%= link_to 'Mustermeister', root_path, class: 'text-xl font-bold text-gray-800' %>
             </div>
             <% if user_signed_in? %>
               <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
@@ -58,6 +58,7 @@
             <% if user_signed_in? %>
               <div class="flex items-center space-x-4">
                 <span class="text-gray-700"><%= current_user.name %></span>
+                <%= link_to 'Profile', profile_path, class: 'text-gray-500 hover:text-gray-700' %>
                 <%= button_to 'Sign Out', destroy_user_session_path, method: :delete,
                     class: 'text-gray-500 hover:text-gray-700' %>
               </div>
