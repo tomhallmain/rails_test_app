@@ -19,10 +19,15 @@
           
           <div class="flex-grow min-w-0">
             <h3 class="text-sm font-semibold <%= task.completed ? 'line-through text-gray-500' : 'text-gray-900' %>">
-              <%= task.title %>
+              <%= link_to task.title, task_path(task), class: "hover:text-blue-600" %>
             </h3>
             <div class="text-xs text-gray-600 whitespace-pre-line"><%= task.description %></div>
-            <div class="flex space-x-3 mt-1">
+            <div class="flex flex-wrap gap-2 mt-1">
+              <% if task.project %>
+                <span class="text-xs text-gray-500">
+                  Project: <%= link_to task.project.title, project_path(task.project), class: "text-blue-600 hover:text-blue-800" %>
+                </span>
+              <% end %>
               <% if task.due_date %>
                 <span class="text-xs text-gray-500">
                   Due: <%= task.due_date.strftime("%b %d, %Y") %>
@@ -36,6 +41,12 @@
                     end %>">
                 <%= task.priority&.capitalize %>
               </span>
+              <div class="text-xs text-gray-500">
+                Created: <%= task.created_at.strftime("%b %d, %Y") %>
+                <% if task.updated_at != task.created_at %>
+                  <br>Updated: <%= task.updated_at.strftime("%b %d, %Y") %>
+                <% end %>
+              </div>
             </div>
           </div>
         </div>
